@@ -1,6 +1,6 @@
 {
-  "name": "cc",
-  "productName": "cc",
+  "name": "set-remote",
+  "productName": "set-remote",
   "description": "My Electron application description",
   "keywords": [],
   "main": "./main.js",
