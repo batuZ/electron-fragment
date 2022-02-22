@@ -1,0 +1,16 @@
+{
+  "name": "questionable-trick-compose-tc0fz",
+  "productName": "questionable-trick-compose-tc0fz",
+  "description": "My Electron application description",
+  "keywords": [],
+  "main": "./main.js",
+  "version": "1.0.0",
+  "author": "batu",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "17.0.1"
+  }
+}
