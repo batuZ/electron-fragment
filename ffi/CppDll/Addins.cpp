@@ -1,9 +1,8 @@
-#include "pch.h"
 #include "Addins.h"
 
 void testMSG()
 {
-	MessageBox(NULL, (wchar_t*)"从C++发出了一条消息", (wchar_t*)"message", MB_OK);
+	std::cout << "call lib success!!" << std::endl;
 }
 
 int testInt(int a, int b)
@@ -25,8 +24,10 @@ bool testBool(int s)
 
 const char* testString(const char* a, char* ref)
 {
-	strcpy(ref, "fffff");
-	return a;
+	std::cout << "---cpp_lib:" << a << std::endl;
+	std::cout<< "---cpp_lib:" << ref << std::endl;
+	strcpy(ref, "fffff哈哈哈");
+	return "一段中文，some englis";
 }
 
 void testStruct(Mia* m)
@@ -52,4 +53,9 @@ void testObjArr(Mia* m)
 void testCallback(_callback logCallBack)
 {
 	logCallBack(3);
+}
+
+
+void stringTest(std::string& res) {
+	std::cout << "---cpp_lib:" << res.c_str() << std::endl;
 }

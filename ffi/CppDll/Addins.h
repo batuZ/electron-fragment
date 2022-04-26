@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-
+#include <string>
 #pragma warning(disable:4996)
 #define ADDINDLL __declspec(dllexport)
 
@@ -11,7 +11,7 @@ typedef struct mia {
 	int num;
 	double pi;
 }Mia;
-
+ 
 using _callback = void(int);
 
 extern "C"
@@ -24,4 +24,6 @@ extern "C"
 	ADDINDLL void testStruct(Mia* m);
 	ADDINDLL void testObjArr(Mia* m);
 	ADDINDLL void testCallback(_callback logCallBack);
+
+	ADDINDLL void stringTest(std::string& res);
 }

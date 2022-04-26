@@ -2,7 +2,8 @@ const ffi = require('ffi-napi');
 const ref = require('ref-napi')
 const refArray = require('ref-array-napi')
 const Struct = require('ref-struct-napi')
-
+const path = require('path')
+const fs = require('fs')
 
 const _void = 'void'
 const _int = 'int'
@@ -21,7 +22,38 @@ const mia = Struct({
 
 const mia_list = refArray(mia)
 
-const myDll = new ffi.Library(__dirname + '\\Dll1.dll', {
+
+
+/**
+ * 读入dll方法，解决运行目录问题
+ * @param {string} lib_path dll路径
+ * @param {object} func_list 方法列表
+ * @returns {Library} ffi_object ffi对象
+ */
+function load_dll(lib_path, func_list = {}) {
+    let res
+    if (fs.existsSync(lib_path)) {
+        let ori_path = process.cwd(),
+            dir_name = path.dirname(lib_path),
+            base_name = path.basename(lib_path)
+        try {
+            process.chdir(dir_name)
+            res = new ffi.Library(base_name, func_list)
+        } catch (err) {
+            console.error('----->: ', err)
+        } finally {
+            process.chdir(ori_path)
+        }
+    } else {
+        console.error('-----> 目标库不存在: ', lib_path)
+    }
+    return res
+}
+
+
+
+let a1 = './CppDll/release/CppDll.dll'
+const myDll = new ffi.Library(a1, {
     // void func()
     testMSG: [_void, []],
 
@@ -47,9 +79,11 @@ const myDll = new ffi.Library(__dirname + '\\Dll1.dll', {
     testCallback: [_void, [_callback]]
 });
 
+
 let res
 // res = myDll.testMSG()
-// res = myDll.testInt(1, 2)
+// res = myDll.testInt(4, 2)
+// console.log('----> ',res)
 // res = myDll.testBool(12)
 
 // 异步
@@ -82,8 +116,8 @@ let res
 // console.log(ref.readCString(aMia.description.buffer))
 
 // object[]
-// let res_list = new mia_list(3)
-// myDll.testObjArr(res_list)
+let res_list = new mia_list(3)
+myDll.testObjArr(res_list)
 
 
 // console.log(res_list[1].num)
