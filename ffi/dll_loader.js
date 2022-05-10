@@ -6,7 +6,7 @@ const path = require('path')
 const fs = require('fs')
 const lib_path = './CppDll/release/CppDll.dll'
 
-function loader(func_list) {
+function loader(lib_path, func_list) {
     let res
     if (fs.existsSync(lib_path)) {
         let ori_path = process.cwd(),
@@ -34,8 +34,8 @@ const mia = Struct({
 })
 
 const mia_list = refArray(mia)
-
-exports.api = loader({
+exports.loader = loader
+exports.api = loader(lib_path, {
     testMSG: ['void', []],                          //void testMSG();
     testInt: ['int', ['int', 'int']],               //int testInt(int a, int b);
     testIntPnt: ['int', ['int *']],                 //int testIntPnt(int * a);
